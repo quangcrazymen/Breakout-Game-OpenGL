@@ -6,6 +6,7 @@
 #include "GameLevel.h"
 #include "BallObject.h"
 #include "ParticleGenerator.h"
+#include "PostProcessor.h"
 
 // GLOBAL RENDERER ?
 SpriteRenderer* Renderer;
@@ -22,7 +23,8 @@ const float BALL_RADIUS = 12.5f;
 GameObject* Player;
 BallObject* Ball;
 ParticleGenerator* Particles;
-
+PostProcessor* Effects;
+float ShakeTime = 0.0f;
 
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -36,6 +38,7 @@ Game::~Game()
     delete Player;
     delete Ball;
     delete Particles;
+    delete Effects;
 }
 
 void Game::Init()
@@ -43,15 +46,19 @@ void Game::Init()
     // load shaders
     ResourceManager::LoadShader("Shaders/Sprite.vert", "Shaders/Sprite.frag", nullptr, "sprite");
     ResourceManager::LoadShader("Shaders/particle.vert", "Shaders/particle.frag", nullptr, "particle");
+    ResourceManager::LoadShader("Shaders/post_processing.vert", "Shaders/post_processing.frag", nullptr, "postprocessing");
 
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width),
         static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
-    ResourceManager::GetShader("particle").Use().SetMatrix4("projection", projection);
+    //ResourceManager::GetShader("particle").Use().SetMatrix4("projection", projection);
+    ResourceManager::GetShader("particle").Use().SetInteger("sprite", 0);
+    ResourceManager::GetShader("particle").SetMatrix4("projection", projection);
     // set render-specific controls
     Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+    Effects = new PostProcessor(ResourceManager::GetShader("postprocessing"), this->Width, this->Height);
 
     // load textures
     ResourceManager::LoadTexture("textures/background.jpg", false, "background");
@@ -65,10 +72,11 @@ void Game::Init()
         this->Width / 2.0f - PLAYER_SIZE.x / 2.0f,
         this->Height - PLAYER_SIZE.y
     );
-    Player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("paddle"));
 
     glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS,
         -BALL_RADIUS * 2.0f);
+
+    Player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("paddle"));
     Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY,
         ResourceManager::GetTexture("face"));
     Particles = new ParticleGenerator(
@@ -93,6 +101,12 @@ void Game::Update(float dt)
     Ball->Move(dt, this->Width);
     // check for collisions
     this->DoCollisions();
+    if (ShakeTime > 0.0f)
+    {
+        ShakeTime -= dt;
+        if (ShakeTime <= 0.0f)
+            Effects->Shake = false;
+    }
     // check loss condition
     if (Ball->Position.y >= this->Height) // did ball reach bottom edge?
     {
@@ -134,6 +148,7 @@ void Game::ProcessInput(float dt)
 void Game::Render()
 {
     if (this->State == GAME_ACTIVE) {
+        Effects->BeginRender();
         Renderer->DrawSprite(ResourceManager::GetTexture("background"),
             glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f
         );
@@ -142,8 +157,9 @@ void Game::Render()
         Ball->Draw(*Renderer);
         Player->Draw(*Renderer);
         Particles->Draw();
+        Effects->EndRender();
+        Effects->Render(glfwGetTime());
     }
-    //Renderer->DrawSprite(ResourceManager::GetTexture("face"), glm::vec2(200.0f, 200.0f), glm::vec2(30.0f, 30.0f), 45.0f, glm::vec3(0.0, 1.0, 0.0));
 }
 
 void Game::ResetLevel()
@@ -183,6 +199,11 @@ void Game::DoCollisions()
                 // destroy block if not solid
                 if (!box.IsSolid)
                     box.Destroyed = true;
+                else
+                {   // if block is solid, enable shake effect
+                    ShakeTime = 0.05f;
+                    Effects->Shake = true;
+                }
                 // collision resolution
                 Direction dir = std::get<1>(collision);
                 glm::vec2 diff_vector = std::get<2>(collision);
