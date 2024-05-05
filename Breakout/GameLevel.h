@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include "GameObject.h"
-class GameLevel
-{
+#include "Observer.h"
+class GameLevel {
 public:
 	// level state
 	std::vector<GameObject> Bricks;

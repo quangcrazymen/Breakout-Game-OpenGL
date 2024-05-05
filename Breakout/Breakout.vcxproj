@@ -110,8 +110,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\quang\source\repos\learnOpenGL\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\quang\source\LearnOpenGL\lib;C:\Users\quang\source\repos\learnOpenGL\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,11 +141,15 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ParticleGenerator.h" />
+    <ClInclude Include="Physic.h" />
     <ClInclude Include="PostProcessor.h" />
+    <ClInclude Include="PowerUps.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
@@ -157,12 +161,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
+    <ClCompile Include="Physic.cpp" />
     <ClCompile Include="PostProcessor.cpp" />
+    <ClCompile Include="PowerUps.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +180,8 @@
     <None Include="Shaders\post_processing.vert" />
     <None Include="Shaders\Sprite.frag" />
     <None Include="Shaders\Sprite.vert" />
+    <None Include="Shaders\text_2d.frag" />
+    <None Include="Shaders\text_2d.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\LearnOpenGL\resources\textures\particle.png" />

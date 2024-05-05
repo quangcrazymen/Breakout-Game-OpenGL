@@ -8,16 +8,6 @@ enum GameState {
     GAME_WIN
 };
 
-// Represents the four possible (collision) directions
-enum Direction {
-    UP,
-    RIGHT,
-    DOWN,
-    LEFT
-};
-// Defines a Collision typedef that represents collision data
-typedef std::tuple<bool, Direction, glm::vec2> Collision; // <collision?, what direction?, difference vector center - closest point>
-
 class Game
 {
 
@@ -39,9 +29,19 @@ public:
     void ProcessInput(float dt);
     void Update(float dt);
     void Render();
-    void DoCollisions();
     // reset
     void ResetLevel();
     void ResetPlayer();
+
+
+    // GLOBAL RENDERER ?
+    class SpriteRenderer* Renderer;
+    class GameObject* Player;
+    class BallObject* Ball;
+    class ParticleGenerator* Particles;
+    class PostProcessor* Effects;
+    class TextRenderer* Text;
+    class Physic* Physics;
+    float ShakeTime = 0.0f;
 };
 
