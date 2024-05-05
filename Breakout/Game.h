@@ -42,6 +42,7 @@ public:
     class PostProcessor* Effects;
     class TextRenderer* Text;
     class Physic* Physics;
+    class ScoreBoard* mScoreBoard;
     float ShakeTime = 0.0f;
 };
 

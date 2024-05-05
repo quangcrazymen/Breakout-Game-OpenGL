@@ -10,6 +10,7 @@
 #include "TextRenderer.h"
 #include "Define.h"
 #include "Physic.h"
+#include "ScoreBoard.h"
 
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -84,6 +85,8 @@ void Game::Init()
     this->Level = 0;
     // Init Physics system
     Physics = new Physic(this);
+    mScoreBoard = new ScoreBoard();
+    Physics->addObserver(mScoreBoard);
 }
 
 void Game::Update(float dt)
@@ -149,7 +152,7 @@ void Game::Render()
         Particles->Draw();
         Effects->EndRender();
         Effects->Render(glfwGetTime());
-        Text->RenderText("Lives:" , 5.0f, 5.0f, 1.0f);
+        Text->RenderText("Lives:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
     }
 }
 

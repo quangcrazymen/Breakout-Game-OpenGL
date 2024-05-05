@@ -22,6 +22,7 @@ public:
 	{
 		// Remove from array...
 		observers_.erase((std::find(observers_.begin(),observers_.end(),observer),observers_.end()));
+		numObservers_--;
 	}
 protected:
 	void notify(const GameObject& entity, Event event)
@@ -33,12 +34,3 @@ protected:
 	}
 
 };
-
-class Physics : public Subject
-{
-public:
-	//void updateEntity(GameObject& entity) {
-	//	notify(entity,EVENT_TOUCH);
-	//}
-};
-

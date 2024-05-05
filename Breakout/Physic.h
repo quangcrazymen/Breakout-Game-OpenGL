@@ -5,6 +5,7 @@
 #include "Define.h"
 #include "glm/glm.hpp"
 #include "PostProcessor.h"
+#include "Subject.h"
 
 // Represents the four possible (collision) directions
 enum Direction {
@@ -15,7 +16,7 @@ enum Direction {
 };
 // Defines a Collision typedef that represents collision data
 typedef std::tuple<bool, Direction, glm::vec2> Collision; // <collision?, what direction?, difference vector center - closest point>
-class Physic
+class Physic : public Subject
 {
 public:
     Physic(Game *game) {
@@ -38,8 +39,10 @@ public:
                 if (std::get<0>(collision)) // if collision is true
                 {
                     // destroy block if not solid
-                    if (!box.IsSolid)
+                    if (!box.IsSolid) {
                         box.Destroyed = true;
+                        notify(*game->Ball, GAIN_SCORE);
+                    }
                     else
                     {   // if block is solid, enable shake effect
                         game->ShakeTime = 0.05f;
