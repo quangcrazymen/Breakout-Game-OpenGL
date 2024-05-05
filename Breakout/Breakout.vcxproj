@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\quang\source\repos\learnOpenGL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\quang\source\imGUI\imgui\backends;C:\Users\quang\source\imGUI\imgui;C:\Users\quang\source\repos\learnOpenGL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -135,6 +135,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\imGUI\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="..\..\..\imGUI\imgui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\..\..\imGUI\imgui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\..\..\imGUI\imgui\imconfig.h" />
+    <ClInclude Include="..\..\..\imGUI\imgui\imgui.h" />
+    <ClInclude Include="..\..\..\imGUI\imgui\imgui_internal.h" />
     <ClInclude Include="BallObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLevel.h" />
@@ -154,6 +160,13 @@
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\imGUI\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\..\..\imGUI\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\..\..\imGUI\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\imGUI\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\imGUI\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\imGUI\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\..\..\imGUI\imgui\imgui_widgets.cpp" />
     <ClCompile Include="BallObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLevel.cpp" />
