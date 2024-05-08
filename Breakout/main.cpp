@@ -136,6 +136,21 @@ int main(int argc, char* argv[])
         lastFrame = currentFrame;
         glfwPollEvents();
 
+        // manage user input
+        // -----------------
+        Breakout.ProcessInput(deltaTime);
+
+        // update game state
+        // -----------------
+        Breakout.Update(deltaTime);
+
+        // render
+        // ------
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        Breakout.Render();
+
+        // @todo seperate this into layers to render
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -180,11 +195,11 @@ int main(int argc, char* argv[])
 
         // Rendering
         ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
+        //int display_w, display_h;
+        //glfwGetFramebufferSize(window, &display_w, &display_h);
+        //glViewport(0, 0, display_w, display_h);
+        //glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        //glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         // Update and Render additional Platform Windows
@@ -197,21 +212,8 @@ int main(int argc, char* argv[])
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_context);
         }
-        // manage user input
-        // -----------------
-        Breakout.ProcessInput(deltaTime);
-
-        // update game state
-        // -----------------
-        Breakout.Update(deltaTime);
-
-        // render
-        // ------
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        Breakout.Render();
-
         glfwSwapBuffers(window);
+
     }
 
     // delete all resources as loaded using the resource manager
