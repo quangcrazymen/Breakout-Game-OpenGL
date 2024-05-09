@@ -114,6 +114,7 @@ int main(int argc, char* argv[])
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
+    bool render_the_scene = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // initialize game
@@ -148,7 +149,9 @@ int main(int argc, char* argv[])
         // ------
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        Breakout.Render();
+        if (render_the_scene) {
+			Breakout.Render();
+        }
 
         // @todo seperate this into layers to render
         // Start the Dear ImGui frame
@@ -170,6 +173,7 @@ int main(int argc, char* argv[])
             ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
+            ImGui::Checkbox("Render the scene", &render_the_scene);
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
