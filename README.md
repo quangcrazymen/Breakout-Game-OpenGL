@@ -7,7 +7,10 @@ This is a visual studio project. Just open .sln file with visual studio 22, and 
 ## Feature list:
 - Classic breakout games
 - Better graphics :joy:
-- 
+- Game editor
+
 ## Task list:
 - [x] Basic gameplay
-- [ ] Sound
+- [ ] Post-processing
+- [ ] Power-ups
+- [ ] Audio
