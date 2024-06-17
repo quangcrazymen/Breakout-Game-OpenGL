@@ -39,6 +39,7 @@ public:
     // Power-up
     void SpawnPowerUps(GameObject& block);
     void UpdatePowerUps(float dt);
+    void ActivatePowerUp(PowerUp& powerUp);
 
     // GLOBAL RENDERER ?
     class SpriteRenderer* Renderer;

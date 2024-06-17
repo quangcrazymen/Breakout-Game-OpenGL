@@ -100,6 +100,7 @@ void Game::Update(float dt)
     Ball->Move(dt, this->Width);
     // check for collisions
     Physics->DoCollisions();
+    this->UpdatePowerUps(dt);
     if (ShakeTime > 0.0f)
     {
         ShakeTime -= dt;
@@ -158,6 +159,11 @@ void Game::Render()
         Particles->Draw();
         Effects->EndRender();
         Effects->Render(glfwGetTime());
+        for (PowerUp& powerUp : this->PowerUps) {
+            if (!powerUp.Destroyed) {
+                powerUp.Draw(*Renderer);
+            }
+        }
         Text->RenderText("Lives:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
     }
 }
@@ -189,7 +195,37 @@ bool ShouldSpawn(unsigned int chance)
     return random == 0;
 }
 
-
+void Game:: ActivatePowerUp(PowerUp& powerUp)
+{
+    if (powerUp.Type == "speed")
+    {
+        Ball->Velocity *= 1.2;
+    }
+    else if (powerUp.Type == "sticky")
+    {
+        Ball->Sticky = true;
+        Player->Color = glm::vec3(1.0f, 0.5f, 1.0f);
+    }
+    else if (powerUp.Type == "pass-through")
+    {
+        Ball->PassThrough = true;
+        Ball->Color = glm::vec3(1.0f, 0.5f, 0.5f);
+    }
+    else if (powerUp.Type == "pad-size-increase")
+    {
+        Player->Size.x += 50;
+    }
+    else if (powerUp.Type == "confuse")
+    {
+        if (!Effects->Chaos)
+            Effects->Confuse = true; // only activate if chaos wasn't already active
+    }
+    else if (powerUp.Type == "chaos")
+    {
+        if (!Effects->Confuse)
+            Effects->Chaos = true;
+    }
+}
 
 void Game::SpawnPowerUps(GameObject& block)
 {

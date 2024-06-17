@@ -42,6 +42,7 @@ public:
                     if (!box.IsSolid) {
                         box.Destroyed = true;
                         notify(*game->Ball, GAIN_SCORE);
+                        game->SpawnPowerUps(box);
                     }
                     else
                     {   // if block is solid, enable shake effect
@@ -51,26 +52,41 @@ public:
                     // collision resolution
                     Direction dir = std::get<1>(collision);
                     glm::vec2 diff_vector = std::get<2>(collision);
-                    if (dir == LEFT || dir == RIGHT) // horizontal collision
-                    {
-                        game->Ball->Velocity.x = -game->Ball->Velocity.x; // reverse horizontal velocity
-                        // relocate
-                        float penetration = game->Ball->Radius - std::abs(diff_vector.x);
-                        if (dir == LEFT)
-                            game->Ball->Position.x += penetration; // move ball to right
-                        else
-                            game->Ball->Position.x -= penetration; // move ball to left;
+                    if (!(game->Ball->PassThrough && !box.IsSolid)) {
+						if (dir == LEFT || dir == RIGHT) // horizontal collision
+						{
+							game->Ball->Velocity.x = -game->Ball->Velocity.x; // reverse horizontal velocity
+							// relocate
+							float penetration = game->Ball->Radius - std::abs(diff_vector.x);
+							if (dir == LEFT)
+								game->Ball->Position.x += penetration; // move ball to right
+							else
+								game->Ball->Position.x -= penetration; // move ball to left;
+						}
+						else // vertical collision
+						{
+							game->Ball->Velocity.y = -game->Ball->Velocity.y; // reverse vertical velocity
+							// relocate
+							float penetration = game->Ball->Radius - std::abs(diff_vector.y);
+							if (dir == UP)
+								game->Ball->Position.y -= penetration; // move ball bback up
+							else
+								game->Ball->Position.y += penetration; // move ball back down
+						}
                     }
-                    else // vertical collision
-                    {
-                        game->Ball->Velocity.y = -game->Ball->Velocity.y; // reverse vertical velocity
-                        // relocate
-                        float penetration = game->Ball->Radius - std::abs(diff_vector.y);
-                        if (dir == UP)
-                            game->Ball->Position.y -= penetration; // move ball bback up
-                        else
-                            game->Ball->Position.y += penetration; // move ball back down
-                    }
+                }
+            }
+        }
+        for (PowerUp& powerUp : game->PowerUps) {
+            if (!powerUp.Destroyed)
+            {
+                if (powerUp.Position.y >= game->Height)
+                    powerUp.Destroyed = true;
+                if (CheckCollision(*game->Player, powerUp))
+                {	// collided with player, now activate powerup
+                    game->ActivatePowerUp(powerUp);
+                    powerUp.Destroyed = true;
+                    powerUp.Activated = true;
                 }
             }
         }
@@ -90,6 +106,7 @@ public:
             game->Ball->Velocity = glm::normalize(game->Ball->Velocity) * glm::length(oldVelocity); // keep speed consistent over both axes (multiply by length of old velocity, so total strength is not changed)
             // fix sticky paddle
             game->Ball->Velocity.y = -1.0f * abs(game->Ball->Velocity.y);
+            game->Ball->Stuck = game->Ball->Sticky;
         }
     }
 
