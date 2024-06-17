@@ -23,11 +23,6 @@ public:
         this->game = game;
     }
     Game* game;
-    // collision detection
-    //bool CheckCollision(GameObject& one, GameObject& two);
-    //Collision CheckCollision(BallObject& one, GameObject& two);
-    //Direction VectorDirection(glm::vec2 closest);
-    //void DoCollisions();
 
     void DoCollisions()
     {

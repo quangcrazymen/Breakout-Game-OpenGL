@@ -10,7 +10,6 @@ enum GameState {
     GAME_WIN
 };
 
-//bool IsOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
 using namespace irrklang;
 
 extern ISoundEngine* SoundEngine;
