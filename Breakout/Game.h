@@ -1,12 +1,15 @@
 #pragma once
+#include <vector>
 #include "SpriteRenderer.h"
 #include "GameLevel.h"
-#include <vector>
+#include "PowerUps.h"
 enum GameState {
     GAME_ACTIVE,
     GAME_MENU,
     GAME_WIN
 };
+
+//bool IsOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
 
 class Game
 {
@@ -18,6 +21,7 @@ public:
     unsigned int Width, Height;
     // Level
     std::vector<GameLevel> Levels;
+    std::vector<PowerUp> PowerUps;
     unsigned int Level;
 
     // constructor/destructor
@@ -32,7 +36,9 @@ public:
     // reset
     void ResetLevel();
     void ResetPlayer();
-
+    // Power-up
+    void SpawnPowerUps(GameObject& block);
+    void UpdatePowerUps(float dt);
 
     // GLOBAL RENDERER ?
     class SpriteRenderer* Renderer;
@@ -45,4 +51,5 @@ public:
     class ScoreBoard* mScoreBoard;
     float ShakeTime = 0.0f;
 };
+
 
