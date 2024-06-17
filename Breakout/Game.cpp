@@ -12,6 +12,7 @@
 #include "Physic.h"
 #include "ScoreBoard.h"
 
+ISoundEngine* SoundEngine = createIrrKlangDevice();
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
 {
@@ -29,7 +30,7 @@ Game::~Game()
 
 void Game::Init()
 {
-
+    SoundEngine->play2D("Audio/breakout.mp3", true);
     // load shaders
     ResourceManager::LoadShader("Shaders/Sprite.vert", "Shaders/Sprite.frag", nullptr, "sprite");
     ResourceManager::LoadShader("Shaders/particle.vert", "Shaders/particle.frag", nullptr, "particle");
@@ -164,7 +165,7 @@ void Game::Render()
                 powerUp.Draw(*Renderer);
             }
         }
-        Text->RenderText("Lives:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
+        Text->RenderText("Score:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
     }
 }
 

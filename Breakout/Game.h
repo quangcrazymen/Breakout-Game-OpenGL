@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <irrKlang/irrKlang.h>
 #include "SpriteRenderer.h"
 #include "GameLevel.h"
 #include "PowerUps.h"
@@ -10,7 +11,9 @@ enum GameState {
 };
 
 //bool IsOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
+using namespace irrklang;
 
+extern ISoundEngine* SoundEngine;
 class Game
 {
 

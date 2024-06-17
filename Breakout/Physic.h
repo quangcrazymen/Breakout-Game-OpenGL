@@ -43,11 +43,13 @@ public:
                         box.Destroyed = true;
                         notify(*game->Ball, GAIN_SCORE);
                         game->SpawnPowerUps(box);
+                        SoundEngine->play2D("audio/bleep.mp3", false);
                     }
                     else
                     {   // if block is solid, enable shake effect
                         game->ShakeTime = 0.05f;
                         game->Effects->Shake = true;
+                        SoundEngine->play2D("audio/solid.wav", false);
                     }
                     // collision resolution
                     Direction dir = std::get<1>(collision);
@@ -87,6 +89,7 @@ public:
                     game->ActivatePowerUp(powerUp);
                     powerUp.Destroyed = true;
                     powerUp.Activated = true;
+                    SoundEngine->play2D("audio/powerup.wav", false);
                 }
             }
         }
@@ -107,6 +110,7 @@ public:
             // fix sticky paddle
             game->Ball->Velocity.y = -1.0f * abs(game->Ball->Velocity.y);
             game->Ball->Stuck = game->Ball->Sticky;
+            SoundEngine->play2D("audio/bleep.wav", false);
         }
     }
 
