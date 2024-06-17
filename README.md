@@ -12,5 +12,5 @@ This is a visual studio project. Just open .sln file with visual studio 22, and 
 ## Task list:
 - [x] Basic gameplay
 - [ ] Post-processing
-- [ ] Power-ups
+- [x] Power-ups
 - [ ] Audio
