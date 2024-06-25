@@ -22,3 +22,15 @@
 - [x] Post-processing
 - [x] Power-ups
 - [x] Audio
+
+### List of Power-ups
+
+| Feature | Description                  | Looks |
+| ------- | ---------------------------- | ----- |
+| Speed   | Speed up the ball            |
+| Sticky  | Stick the ball to the paddle |       |
+
+| Feature | Description                      |
+| ------- | -------------------------------- |
+| UI      | Imgui to count FPS, tweak number |
+| Editor  | WIP                              |
