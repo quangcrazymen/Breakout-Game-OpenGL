@@ -81,10 +81,12 @@ void Game::Init()
     Text = new TextRenderer(this->Width, this->Height);
     Text->Load("Fonts/OCRAEXT.TTF", 24);
 
+    GameLevel test; test.Load("levels/test.lvl", this->Width, this->Height / 2);
     GameLevel one; one.Load("levels/one.lvl", this->Width, this->Height / 2);
     GameLevel two; two.Load("levels/two.lvl", this->Width, this->Height / 2);
     GameLevel three; three.Load("levels/three.lvl", this->Width, this->Height / 2);
     GameLevel four; four.Load("levels/four.lvl", this->Width, this->Height / 2);
+    this->Levels.push_back(test);
     this->Levels.push_back(one);
     this->Levels.push_back(two);
     this->Levels.push_back(three);
@@ -115,6 +117,12 @@ void Game::Update(float dt)
         this->ResetPlayer();
     }
     Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2));
+    // Change Level
+    if (this->Levels[Level].IsCompleted()) {
+        ResetLevel();
+        this->Level = 1;
+        std::cout << "You finish the first level please proceed\n";
+    }
 }
 
 void Game::ProcessInput(float dt)
