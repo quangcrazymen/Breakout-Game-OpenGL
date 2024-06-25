@@ -26,9 +26,10 @@
 ### List of Power-ups
 
 | Feature | Description                  | Looks |
-| ------- | ---------------------------- | ----- |
-| Speed   | Speed up the ball            |
-| Sticky  | Stick the ball to the paddle |       |
+| ------- | ---------------------------- | ----|
+| Speed   | Speed up the ball            |<img width="200" height="50" src="https://github.com/quangcrazymen/Breakout-Game-OpenGL/assets/80439365/6d87aab6-9340-4955-8ef7-8c185b0af22f">|
+| Sticky  | Stick the ball to the paddle | <img width="200" height="50" src="https://github.com/quangcrazymen/Breakout-Game-OpenGL/assets/80439365/ad8b47c4-d3ed-4fe4-ab60-89938986b34e">      |
+
 
 | Feature | Description                      |
 | ------- | -------------------------------- |
