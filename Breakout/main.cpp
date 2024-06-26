@@ -143,7 +143,9 @@ int main(int argc, char* argv[])
 
         // update game state
         // -----------------
-        Breakout.Update(deltaTime);
+        if (Breakout.State == GAME_ACTIVE) {
+            Breakout.Update(deltaTime);
+        }
 
         // render
         // ------

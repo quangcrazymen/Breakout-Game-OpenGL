@@ -120,7 +120,7 @@ void Game::Update(float dt)
     // Change Level
     if (this->Levels[Level].IsCompleted()) {
         ResetLevel();
-        this->Level = 1;
+        this->Level = this->Level>Levels.size()? 0 : ++this->Level ;
         std::cout << "You finish the first level please proceed\n";
     }
 }
@@ -149,14 +149,24 @@ void Game::ProcessInput(float dt)
                     Ball->Position.x += velocity;
             }
         }
-        if (this->Keys[GLFW_KEY_SPACE])
+        if (this->Keys[GLFW_KEY_ENTER]){
+            this->State = GAME_PAUSE;
+        }
+        if (this->Keys[GLFW_KEY_SPACE]) {
             Ball->Stuck = false;
+        }
+    }
+    else if (this->State == GAME_PAUSE) {
+        if (this->Keys[GLFW_KEY_ENTER]) {
+            this->State = GAME_ACTIVE;
+
+        }
     }
 }
 
 void Game::Render()
 {
-    if (this->State == GAME_ACTIVE) {
+    //if (this->State == GAME_ACTIVE) {
         Effects->BeginRender();
         Renderer->DrawSprite(ResourceManager::GetTexture("background"),
             glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f
@@ -174,7 +184,7 @@ void Game::Render()
             }
         }
         Text->RenderText("Score:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
-    }
+    //}
 }
 
 void Game::ResetLevel()
@@ -238,19 +248,19 @@ void Game:: ActivatePowerUp(PowerUp& powerUp)
 
 void Game::SpawnPowerUps(GameObject& block)
 {
-    if (ShouldSpawn(75)) // 1 in 75 chance
+    if (ShouldSpawn(50)) // 1 in 75 chance
         this->PowerUps.push_back(
             PowerUp("speed", glm::vec3(0.5f, 0.5f, 1.0f), 0.0f, block.Position, ResourceManager::GetTexture("powerup_speed")
             ));
-    if (ShouldSpawn(75))
+    if (ShouldSpawn(50))
         this->PowerUps.push_back(
             PowerUp("sticky", glm::vec3(1.0f, 0.5f, 1.0f), 20.0f, block.Position, ResourceManager::GetTexture("powerup_sticky")
             ));
-    if (ShouldSpawn(75))
+    if (ShouldSpawn(50))
         this->PowerUps.push_back(
             PowerUp("pass-through", glm::vec3(0.5f, 1.0f, 0.5f), 10.0f, block.Position, ResourceManager::GetTexture("powerup_passthrough")
             ));
-    if (ShouldSpawn(75))
+    if (ShouldSpawn(50))
         this->PowerUps.push_back(
             PowerUp("pad-size-increase", glm::vec3(1.0f, 0.6f, 0.4), 0.0f, block.Position, ResourceManager::GetTexture("powerup_increase")
             ));
