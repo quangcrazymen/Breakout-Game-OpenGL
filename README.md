@@ -34,6 +34,11 @@
 | Confuse (Negative)  | Everything is upside down, color is converted to negative hue | <img width="200" height="50" src="https://github.com/quangcrazymen/Breakout-Game-OpenGL/assets/80439365/40fb27ce-c5bf-4e0c-a219-03c8963d4470">|
 | Chaos (Negative)  | Just try it for you self🙃 | <img width="200" height="50" src="https://github.com/quangcrazymen/Breakout-Game-OpenGL/assets/80439365/9a65cb07-7f60-4bb4-a55b-fa5b4d95eae0">|
 
+## Technical detail
+### Class diagram
+![ClassDiagram](https://github.com/quangcrazymen/Breakout-Game-OpenGL/assets/80439365/7a110221-3e86-45d6-b2c1-6911e170f61e)
+*Architectural code design of the game*
+
 | Feature | Description                      |
 | ------- | -------------------------------- |
 | UI      | Imgui to count FPS, tweak number |
