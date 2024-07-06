@@ -22,6 +22,7 @@
 - [x] Post-processing
 - [x] Power-ups
 - [x] Audio
+- [x] Add basic cheat
 
 ### List of Power-ups
 
