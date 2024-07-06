@@ -122,10 +122,18 @@ void Game::Update(float dt)
     }
     Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2));
     // Change Level
-    if (this->Levels[Level].IsCompleted()) {
-        ResetLevel();
-        this->Level = this->Level>Levels.size()? 0 : ++this->Level ;
-        std::cout << "You finish the first level please proceed\n";
+    //if (this->Levels[Level].IsCompleted()) {
+    //    ResetLevel();
+    //    this->Level = this->Level>Levels.size()? 0 : ++this->Level ;
+    //    std::cout << "You finish the first level please proceed\n";
+    //}
+    // Win the game
+    if (this->State == GAME_ACTIVE && this->Levels[this->Level].IsCompleted())
+    {
+        this->ResetLevel();
+        this->ResetPlayer();
+        Effects->Chaos = true;
+        this->State = GAME_WIN;
     }
 }
 
@@ -185,11 +193,20 @@ void Game::ProcessInput(float dt)
 
         }
     }
+    if (this->State == GAME_WIN)
+    {
+        if (this->Keys[GLFW_KEY_ENTER])
+        {
+            this->KeysProcessed[GLFW_KEY_ENTER] = true;
+            Effects->Chaos = false;
+            this->State = GAME_MENU;
+        }
+    }
 }
 
 void Game::Render()
 {
-    if (this->State == GAME_ACTIVE || this->State == GAME_MENU) {
+    if (this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_WIN) {
         Effects->BeginRender();
         Renderer->DrawSprite(ResourceManager::GetTexture("background"),
             glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f
@@ -214,6 +231,15 @@ void Game::Render()
     {
         Text->RenderText("Press ENTER to start", 250.0f, Height / 2, 1.0f);
         Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 20.0f, 0.75f);
+    }
+    if (this->State == GAME_WIN)
+    {
+        Text->RenderText(
+            "You WON!!!", 320.0, Height / 2 - 20.0, 1.0, glm::vec3(0.0, 1.0, 0.0)
+        );
+        Text->RenderText(
+            "Press ENTER to retry or ESC to quit", 130.0, Height / 2, 1.0, glm::vec3(1.0, 1.0, 0.0)
+        );
     }
 }
 

@@ -115,6 +115,7 @@ int main(int argc, char* argv[])
     bool show_demo_window = true;
     bool show_another_window = false;
     bool render_the_scene = true;
+    bool does_we_won_the_game = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // initialize game
@@ -145,6 +146,12 @@ int main(int argc, char* argv[])
         // -----------------
         if (Breakout.State == GAME_ACTIVE) {
             Breakout.Update(deltaTime);
+            if (does_we_won_the_game) {
+                for (GameObject& obj : Breakout.Levels[Breakout.Level].Bricks) {
+                    if(!obj.IsSolid)
+                        obj.Destroyed = true;
+                }
+            }
         }
 
         // render
@@ -170,12 +177,13 @@ int main(int argc, char* argv[])
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("Cheat");                          // Create a window called "Hello, world!" and append into it.
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Text("List of all the cheat in game: ");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
             ImGui::Checkbox("Render the scene", &render_the_scene);
+            ImGui::Checkbox("Win the game", &does_we_won_the_game);
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
