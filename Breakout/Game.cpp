@@ -14,7 +14,7 @@
 
 ISoundEngine* SoundEngine = createIrrKlangDevice();
 Game::Game(unsigned int width, unsigned int height)
-    : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
+    : State(GAME_MENU), Keys(), Width(width), Height(height),Lives(3)
 {
 
 }
@@ -113,7 +113,11 @@ void Game::Update(float dt)
     // check loss condition
     if (Ball->Position.y >= this->Height) // did ball reach bottom edge?
     {
-        this->ResetLevel();
+        --this->Lives;
+        if (this->Lives == 0) {
+            this->ResetLevel();
+            this->State = GAME_MENU;
+        }
         this->ResetPlayer();
     }
     Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2));
@@ -127,6 +131,25 @@ void Game::Update(float dt)
 
 void Game::ProcessInput(float dt)
 {
+    if (this->State == GAME_MENU)
+    {
+        if (this->Keys[GLFW_KEY_ENTER] && !this->KeysProcessed[GLFW_KEY_ENTER]) {
+            this->State = GAME_ACTIVE;
+            this->KeysProcessed[GLFW_KEY_ENTER] = true;
+        }
+        if (this->Keys[GLFW_KEY_W] && !this->KeysProcessed[GLFW_KEY_W]) {
+            this->Level = (this->Level + 1) % 4;
+            this->KeysProcessed[GLFW_KEY_W] = true;
+        }
+        if (this->Keys[GLFW_KEY_S] && !this->KeysProcessed[GLFW_KEY_S])
+        {
+            if (this->Level > 0)
+                --this->Level;
+            else
+                this->Level = 3;
+            this->KeysProcessed[GLFW_KEY_S] = true;
+        }
+    }
     if (this->State == GAME_ACTIVE)
     {
         float velocity = PLAYER_VELOCITY * dt;
@@ -149,9 +172,9 @@ void Game::ProcessInput(float dt)
                     Ball->Position.x += velocity;
             }
         }
-        if (this->Keys[GLFW_KEY_ENTER]){
-            this->State = GAME_PAUSE;
-        }
+        //if (this->Keys[GLFW_KEY_ENTER]){
+        //    this->State = GAME_PAUSE;
+        //}
         if (this->Keys[GLFW_KEY_SPACE]) {
             Ball->Stuck = false;
         }
@@ -166,7 +189,7 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 {
-    //if (this->State == GAME_ACTIVE) {
+    if (this->State == GAME_ACTIVE || this->State == GAME_MENU) {
         Effects->BeginRender();
         Renderer->DrawSprite(ResourceManager::GetTexture("background"),
             glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f
@@ -184,11 +207,19 @@ void Game::Render()
             }
         }
         Text->RenderText("Score:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
-    //}
+        //std::stringstream ss; ss << this->Lives;
+        Text->RenderText("Lives:"+ std::to_string(this->Lives) , 5.0f, 30.0f, 1.0f);
+    }
+    if (this->State == GAME_MENU)
+    {
+        Text->RenderText("Press ENTER to start", 250.0f, Height / 2, 1.0f);
+        Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 20.0f, 0.75f);
+    }
 }
 
 void Game::ResetLevel()
 {
+    this->Lives = 3;
     if (this->Level == 0)
         this->Levels[0].Load("levels/one.lvl", this->Width, this->Height / 2);
     else if (this->Level == 1)
