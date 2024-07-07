@@ -56,6 +56,8 @@ public:
     class Physic* Physics;
     class ScoreBoard* mScoreBoard;
     float ShakeTime = 0.0f;
+    // Test Render Random UI on the screen
+    class GameObject* testUI;
 };
 
 

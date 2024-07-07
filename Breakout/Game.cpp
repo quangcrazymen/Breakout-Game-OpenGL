@@ -61,6 +61,7 @@ void Game::Init()
     ResourceManager::LoadTexture("textures/powerup_passthrough.png", true, "powerup_passthrough");
     ResourceManager::LoadTexture("textures/powerup_speed.png", true, "powerup_speed");
     ResourceManager::LoadTexture("textures/powerup_sticky.png", true, "powerup_sticky");
+    ResourceManager::LoadTexture("textures/UI/ButtonBlue.png", true, "button_blue");
 
     glm::vec2 playerPos = glm::vec2(
         this->Width / 2.0f - PLAYER_SIZE.x / 2.0f,
@@ -92,6 +93,11 @@ void Game::Init()
     this->Levels.push_back(three);
     this->Levels.push_back(four); 
     this->Level = 0;
+
+    glm::vec2 UIPos = glm::vec2(
+        this->Width / 2.0f,
+        this->Height /2.0f    );
+    testUI = new GameObject(UIPos, glm::vec2(20.0f, 20.0f), ResourceManager::GetTexture("button_blue"));
     // Init Physics system
     Physics = new Physic(this);
     mScoreBoard = new ScoreBoard();
@@ -226,6 +232,7 @@ void Game::Render()
         Text->RenderText("Score:"+ std::to_string(mScoreBoard->currentScore) , 5.0f, 5.0f, 1.0f);
         //std::stringstream ss; ss << this->Lives;
         Text->RenderText("Lives:"+ std::to_string(this->Lives) , 5.0f, 30.0f, 1.0f);
+        testUI->Draw(*Renderer);
     }
     if (this->State == GAME_MENU)
     {
