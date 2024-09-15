@@ -174,7 +174,8 @@ int main(int argc, char* argv[])
 
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-            static float f = 0.0f;
+            // Background music volume
+            static float volume = 0.0f;
             static int counter = 0;
 
             ImGui::Begin("Cheat");                          // Create a window called "Hello, world!" and append into it.
@@ -185,7 +186,8 @@ int main(int argc, char* argv[])
             ImGui::Checkbox("Render the scene", &render_the_scene);
             ImGui::Checkbox("Win the game", &does_we_won_the_game);
 
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("Background music", &volume, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            Breakout.BackgroundMusic->setVolume(volume);
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)

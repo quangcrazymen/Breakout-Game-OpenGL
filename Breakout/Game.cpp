@@ -26,11 +26,13 @@ Game::~Game()
     delete Ball;
     delete Particles;
     delete Effects;
+    BackgroundMusic->drop();
+    BackgroundMusic = nullptr;
 }
 
 void Game::Init()
 {
-    SoundEngine->play2D("Audio/breakout.mp3", true);
+    BackgroundMusic = SoundEngine->play2D("Audio/breakout.mp3", true,false,true);
     // load shaders
     ResourceManager::LoadShader("Shaders/Sprite.vert", "Shaders/Sprite.frag", nullptr, "sprite");
     ResourceManager::LoadShader("Shaders/particle.vert", "Shaders/particle.frag", nullptr, "particle");

@@ -58,6 +58,10 @@ public:
     float ShakeTime = 0.0f;
     // Test Render Random UI on the screen
     class GameObject* testUI;
+
+    // Sound
+    //bool isMute = false;
+    irrklang::ISound* BackgroundMusic = nullptr;
 };
 
 
