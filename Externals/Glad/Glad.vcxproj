@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{17715b19-7112-48d5-9009-c75e19deea43}</ProjectGuid>
-    <RootNamespace>Breakout</RootNamespace>
+    <ProjectGuid>{59839918-5270-47aa-a785-2e1fc93bdcd6}</ProjectGuid>
+    <RootNamespace>Glad</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)\Intermediate\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,14 +108,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include\;$(SolutionDir)\Externals\DearImgui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)x64\Debug;$(SolutionDir)Externals\DearImgui\Build\$(Platform)\$(Configuration);$(SolutionDir)Externals\Glad\Build\$(Platform)\$(Configuration);$(SolutionDir)glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Glad.lib;DearImgui.lib;irrKlang.lib;freetype.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,80 +123,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\quang\source\repos\learnOpenGL\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\quang\source\repos\learnOpenGL\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BallObject.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameLevel.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Observer.h" />
-    <ClInclude Include="ParticleGenerator.h" />
-    <ClInclude Include="Physic.h" />
-    <ClInclude Include="PostProcessor.h" />
-    <ClInclude Include="PowerUps.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="ScoreBoard.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="Define.h" />
-    <ClInclude Include="SpriteRenderer.h" />
-    <ClInclude Include="Subject.h" />
-    <ClInclude Include="TextRenderer.h" />
-    <ClInclude Include="texture.h" />
+    <ClCompile Include="src\glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BallObject.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameLevel.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Observer.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
-    <ClCompile Include="Physic.cpp" />
-    <ClCompile Include="PostProcessor.cpp" />
-    <ClCompile Include="PowerUps.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="ScoreBoard.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="Subject.cpp" />
-    <ClCompile Include="TextRenderer.cpp" />
-    <ClCompile Include="texture.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="Shaders\particle.frag" />
-    <None Include="Shaders\particle.vert" />
-    <None Include="Shaders\post_processing.frag" />
-    <None Include="Shaders\post_processing.vert" />
-    <None Include="Shaders\Sprite.frag" />
-    <None Include="Shaders\Sprite.vert" />
-    <None Include="Shaders\text_2d.frag" />
-    <None Include="Shaders\text_2d.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\LearnOpenGL\resources\textures\particle.png" />
-    <Image Include="Textures\particle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Externals\DearImgui\DearImgui.vcxproj">
-      <Project>{9326d489-6601-4154-994a-f066f4a9cb17}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Externals\Glad\Glad.vcxproj">
-      <Project>{59839918-5270-47aa-a785-2e1fc93bdcd6}</Project>
-    </ProjectReference>
+    <ClInclude Include="..\..\include\glad\glad.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

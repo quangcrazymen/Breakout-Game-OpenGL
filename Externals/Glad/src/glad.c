@@ -320,7 +320,8 @@ PFNGLBUFFERSUBDATAPROC glad_glBufferSubData = NULL;
 PFNGLCHECKFRAMEBUFFERSTATUSPROC glad_glCheckFramebufferStatus = NULL;
 PFNGLCHECKNAMEDFRAMEBUFFERSTATUSPROC glad_glCheckNamedFramebufferStatus = NULL;
 PFNGLCLAMPCOLORPROC glad_glClampColor = NULL;
-PFNGLCLEARPROC glad_glClear = NULL;
+// Test out different function pointer definition
+void (*glad_glClear)(GLbitfield mask) = NULL;
 PFNGLCLEARBUFFERDATAPROC glad_glClearBufferData = NULL;
 PFNGLCLEARBUFFERSUBDATAPROC glad_glClearBufferSubData = NULL;
 PFNGLCLEARBUFFERFIPROC glad_glClearBufferfi = NULL;
@@ -989,7 +990,7 @@ static void load_GL_VERSION_1_0(GLADloadproc load) {
 	glad_glTexImage1D = (PFNGLTEXIMAGE1DPROC)load("glTexImage1D");
 	glad_glTexImage2D = (PFNGLTEXIMAGE2DPROC)load("glTexImage2D");
 	glad_glDrawBuffer = (PFNGLDRAWBUFFERPROC)load("glDrawBuffer");
-	glad_glClear = (PFNGLCLEARPROC)load("glClear");
+	glad_glClear = load("glClear");
 	glad_glClearColor = (PFNGLCLEARCOLORPROC)load("glClearColor");
 	glad_glClearStencil = (PFNGLCLEARSTENCILPROC)load("glClearStencil");
 	glad_glClearDepth = (PFNGLCLEARDEPTHPROC)load("glClearDepth");

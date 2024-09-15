@@ -1516,9 +1516,16 @@ typedef void (APIENTRY *GLVULKANPROCNV)(void);
 #ifndef GL_VERSION_1_0
 #define GL_VERSION_1_0 1
 GLAPI int GLAD_GL_VERSION_1_0;
+// Note: __stdcall is call to the system function.
+// Here is the pattern
+// => this function pointer called PFNGLCULLFACEPROC(this is alias)
 typedef void (APIENTRYP PFNGLCULLFACEPROC)(GLenum mode);
+//typedef void (* PFNGLCULLFACEPROC)(GLenum mode);
+// GLAPI == extern
 GLAPI PFNGLCULLFACEPROC glad_glCullFace;
+// => extern PFNGLCULLFACEPROC glad_glCullFace
 #define glCullFace glad_glCullFace
+// 
 typedef void (APIENTRYP PFNGLFRONTFACEPROC)(GLenum mode);
 GLAPI PFNGLFRONTFACEPROC glad_glFrontFace;
 #define glFrontFace glad_glFrontFace
@@ -1558,9 +1565,19 @@ GLAPI PFNGLTEXIMAGE2DPROC glad_glTexImage2D;
 typedef void (APIENTRYP PFNGLDRAWBUFFERPROC)(GLenum buf);
 GLAPI PFNGLDRAWBUFFERPROC glad_glDrawBuffer;
 #define glDrawBuffer glad_glDrawBuffer
-typedef void (APIENTRYP PFNGLCLEARPROC)(GLbitfield mask);
-GLAPI PFNGLCLEARPROC glad_glClear;
+// Let's try to get rid of __stdcall here to see what happens
+// Nothing happen when I removed it, because it's just a calling convention bruh
+// https://en.wikipedia.org/wiki/X86_calling_conventions
+//typedef void (APIENTRYP PFNGLCLEARPROC)(GLbitfield mask); = typedef void (__stdcall* PFNGLCLEARPROC)(GLbitfield mask);
+// => this GLAPI PFNGLCLEARPROC glad_glClear; evaluate to this function pointer
+extern void (__stdcall *glad_glClear)(GLbitfield mask);
 #define glClear glad_glClear
+
+// Example of typedef
+/*
+typedef void (*myfunc)(); => using them like   myfunc f; // compile equally as  void (*f)();
+*/
+
 typedef void (APIENTRYP PFNGLCLEARCOLORPROC)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 GLAPI PFNGLCLEARCOLORPROC glad_glClearColor;
 #define glClearColor glad_glClearColor
