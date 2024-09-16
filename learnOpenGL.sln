@@ -11,9 +11,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DearImgui", "Externals\Dear
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShadowVolume", "ShadowVolume\ShadowVolume.vcxproj", "{163B4ABB-BBFB-4C28-89B0-799DBF87E630}"
 	ProjectSection(ProjectDependencies) = postProject
-		{59839918-5270-47AA-A785-2E1FC93BDCD6} = {59839918-5270-47AA-A785-2E1FC93BDCD6}
 		{9326D489-6601-4154-994A-F066F4A9CB17} = {9326D489-6601-4154-994A-F066F4A9CB17}
+		{D2707174-22E9-497E-9C70-A5C18D932CDE} = {D2707174-22E9-497E-9C70-A5C18D932CDE}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glad3", "Glad3\Glad3.vcxproj", "{D2707174-22E9-497E-9C70-A5C18D932CDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,14 @@ Global
 		{163B4ABB-BBFB-4C28-89B0-799DBF87E630}.Release|x64.Build.0 = Release|x64
 		{163B4ABB-BBFB-4C28-89B0-799DBF87E630}.Release|x86.ActiveCfg = Release|Win32
 		{163B4ABB-BBFB-4C28-89B0-799DBF87E630}.Release|x86.Build.0 = Release|Win32
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Debug|x64.ActiveCfg = Debug|x64
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Debug|x64.Build.0 = Debug|x64
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Debug|x86.ActiveCfg = Debug|Win32
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Debug|x86.Build.0 = Debug|Win32
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Release|x64.ActiveCfg = Release|x64
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Release|x64.Build.0 = Release|x64
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Release|x86.ActiveCfg = Release|Win32
+		{D2707174-22E9-497E-9C70-A5C18D932CDE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

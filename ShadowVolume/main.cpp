@@ -14,6 +14,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "ReadAndWriteFile.h"
 
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -24,19 +25,27 @@ const unsigned int SCREEN_WIDTH = 800;
 // The height of the screen
 const unsigned int SCREEN_HEIGHT = 600;
 
+    //static void perspectiveGL(GLdouble fovY, GLdouble aspect, GLdouble zNear, GLdouble zFar)
+    //{
+    //    const GLdouble pi = 3.1415926535897932384626433832795;
+    //    GLdouble       fW, fH;
 
+    //    // fH = tan( (fovY / 2) / 180 * pi ) * zNear;
+    //    fH = tan(fovY / 360 * pi) * zNear;
+    //    fW = fH * aspect;
+
+    //    glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+    //    glCrear()
+    //}
 int main(int argc, char* argv[])
 {
     glfwInit();
-    /*glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);*/
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    glfwWindowHint(GLFW_RESIZABLE, false);
+    //glfwWindowHint(GLFW_RESIZABLE, false);
 
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Breakout", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Shadow Volume", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     // glad: load all OpenGL function pointers
@@ -111,8 +120,6 @@ int main(int argc, char* argv[])
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
-    bool render_the_scene = true;
-    bool does_we_won_the_game = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // initialize game
@@ -159,6 +166,7 @@ int main(int argc, char* argv[])
         //    Breakout.Render();
         //}
 
+        IOUtils::drawObject(/*nullptr,*/SCREEN_WIDTH, SCREEN_HEIGHT);
         // @todo seperate this into layers to render
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -180,8 +188,6 @@ int main(int argc, char* argv[])
             ImGui::Text("List of all the cheat in game: ");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
-            ImGui::Checkbox("Render the scene", &render_the_scene);
-            ImGui::Checkbox("Win the game", &does_we_won_the_game);
 
             ImGui::SliderFloat("Background music", &volume, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             //Breakout.BackgroundMusic->setVolume(volume);
@@ -208,11 +214,6 @@ int main(int argc, char* argv[])
 
         // Rendering
         ImGui::Render();
-        //int display_w, display_h;
-        //glfwGetFramebufferSize(window, &display_w, &display_h);
-        //glViewport(0, 0, display_w, display_h);
-        //glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        //glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         // Update and Render additional Platform Windows
