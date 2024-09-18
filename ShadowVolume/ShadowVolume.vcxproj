@@ -137,10 +137,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ReadAndWriteFile.cpp" />
+    <ClCompile Include="ThreeDObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h" />
     <ClInclude Include="ReadAndWriteFile.h" />
+    <ClInclude Include="ThreeDObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
