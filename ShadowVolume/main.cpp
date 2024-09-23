@@ -34,6 +34,7 @@ float MatAmb[] = { 0.4f, 0.4f, 0.4f, 1.0f };				// Material - Ambient Values
 float MatDif[] = { 0.2f, 0.6f, 0.9f, 1.0f };				// Material - Diffuse Values
 float MatSpc[] = { 0.0f, 0.0f, 0.0f, 1.0f };				// Material - Specular Values
 float MatShn[] = { 0.0f };								// Material - Shininess
+float MatEms[] = { 0.2f, 0.0f, 0.0f, 1.0f };
 
 float ObjPos[] = { -2.0f,-2.0f,-5.0f };
 
@@ -108,6 +109,7 @@ const unsigned int SCREEN_HEIGHT = 600;
         glMaterialfv(GL_FRONT, GL_DIFFUSE, MatDif);			// Set Material Diffuse
         glMaterialfv(GL_FRONT, GL_SPECULAR, MatSpc);		// Set Material Specular
         glMaterialfv(GL_FRONT, GL_SHININESS, MatShn);		// Set Material Shininess
+        glMaterialfv(GL_FRONT, GL_EMISSION, MatEms);
 
         glCullFace(GL_BACK);								// Set Culling Face To Back Face
         glEnable(GL_CULL_FACE);								// Enable Culling
@@ -247,6 +249,8 @@ const unsigned int SCREEN_HEIGHT = 600;
         glLoadIdentity();									// Reset The Modelview Matrix
         }
 
+    bool initGLSL() ;
+
 int main(int argc, char* argv[])
 {
     glfwInit();
@@ -355,62 +359,11 @@ int main(int argc, char* argv[])
         lastFrame = currentFrame;
         glfwPollEvents();
 
-        //// manage user input
-        //// -----------------
-        //Breakout.ProcessInput(deltaTime);
-
-        //// update game state
-        //// -----------------
-        //if (Breakout.State == GAME_ACTIVE) {
-        //    Breakout.Update(deltaTime);
-        //    if (does_we_won_the_game) {
-        //        for (GameObject& obj : Breakout.Levels[Breakout.Level].Bricks) {
-        //            if (!obj.IsSolid)
-        //                obj.Destroyed = true;
-        //        }
-        //    }
-        //}
-
-        // render
-        // ------
-        //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        //glClear(GL_COLOR_BUFFER_BIT);
-        //if (render_the_scene) {
-        //    Breakout.Render();
-        //}
         int depth;
         glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &depth);
 
         DrawGLScene();
-        //IOUtils::drawObject(/*nullptr,*/SCREEN_WIDTH, SCREEN_HEIGHT);
-        //glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        //glMatrixMode(GL_PROJECTION);
-        //glLoadIdentity();
-        //IOUtils::perspectiveGL(45.0,                             // The camera angle
-        //        (double)SCREEN_WIDTH / (double)SCREEN_HEIGHT, // The width-to-height ratio
-        //        0.001f,                   // The near z clipping coordinate
-        //        200.0);
-        //glMatrixMode(GL_MODELVIEW);
-        //glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &depth);
-
-        //glLoadIdentity();
-        //glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &depth);
-
-        //glTranslatef(0.0f, 0.0f, -20.0f);
-        ////glPushMatrix();
-        //glGetIntegerv(GL_MODELVIEW_STACK_DEPTH, &depth);
-
-//        glBegin(GL_QUADS); // Begin quadrilateral coordinates
-//
-//// Trapezoid
-//glVertex3f(-0.7f, -1.5f, -5.0f);
-//glVertex3f(0.7f, -1.5f, -5.0f);
-//glVertex3f(0.4f, -0.5f, -5.0f);
-//glVertex3f(-0.4f, -0.5f, -5.0f);
-//
-//glEnd();
-
-        //IOUtils::DrawGLRoom();
+        
         // @todo seperate this into layers to render
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -436,6 +389,9 @@ int main(int argc, char* argv[])
             ImGui::SliderFloat("Background music", &volume, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             //Breakout.BackgroundMusic->setVolume(volume);
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+            //static float vec4a[4] = { 0.10f, 0.20f, 0.30f, 0.44f };
+            ImGui::InputFloat3("Shadowed object pos", ObjPos);
 
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter++;
@@ -481,6 +437,11 @@ int main(int argc, char* argv[])
     glfwTerminate();
     return 0;
 }
+
+//bool initGLSL() {
+//    const int MAX_LENGTH
+//}
+
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {

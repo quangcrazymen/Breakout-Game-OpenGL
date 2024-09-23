@@ -108,14 +108,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include\;$(SolutionDir)\Externals\DearImgui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\DalatEngine\include;$(SolutionDir)\include\;$(SolutionDir)\Externals\DearImgui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)Externals\DearImgui\Build\$(Platform)\$(Configuration);$(SolutionDir)Externals\Glad\Build\$(Platform)\$(Configuration);$(SolutionDir)Externals\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Glad.lib;DearImgui.lib;irrKlang.lib;freetype.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)DalatEngine\Build\$(Platform)\$(Configuration)\;$(SolutionDir)lib;$(SolutionDir)Externals\DearImgui\Build\$(Platform)\$(Configuration);$(SolutionDir)Externals\Glad\Build\$(Platform)\$(Configuration);$(SolutionDir)Externals\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DalatEngine.lib;Glad.lib;DearImgui.lib;irrKlang.lib;freetype.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>Scripts\CopyIrrKlangDll.bat x64 Debug</Command>

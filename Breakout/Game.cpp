@@ -11,6 +11,7 @@
 #include "Define.h"
 #include "Physic.h"
 #include "ScoreBoard.h"
+#include "DalatEngine.h"
 
 ISoundEngine* SoundEngine = createIrrKlangDevice();
 Game::Game(unsigned int width, unsigned int height)
@@ -32,6 +33,7 @@ Game::~Game()
 
 void Game::Init()
 {
+    DalatEngine::Core::WelcomeMessage("some_asset.obj");
     BackgroundMusic = SoundEngine->play2D("Audio/breakout.mp3", true,false,true);
     // load shaders
     ResourceManager::LoadShader("Shaders/Sprite.vert", "Shaders/Sprite.frag", nullptr, "sprite");

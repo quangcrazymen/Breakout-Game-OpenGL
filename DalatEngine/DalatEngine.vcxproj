@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{163b4abb-bbfb-4c28-89b0-799dbf87e630}</ProjectGuid>
-    <RootNamespace>ShadowVolume</RootNamespace>
+    <ProjectGuid>{8e9354c7-c3d5-43bd-b1e1-6daefc3b6f41}</ProjectGuid>
+    <RootNamespace>DalatEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -106,15 +106,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Glad3\include;$(SolutionDir)\include\;$(SolutionDir)\Externals\DearImgui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)Externals\DearImgui\Build\$(Platform)\$(Configuration);$(SolutionDir)Glad3\Build\$(Platform)\$(Configuration);$(SolutionDir)Externals\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Glad3.lib;DearImgui.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,17 +132,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ReadAndWriteFile.cpp" />
-    <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="ThreeDObject.cpp" />
+    <ClInclude Include="DalatEngine.h" />
+    <ClInclude Include="include\core\string.h" />
+    <ClInclude Include="include\core\types.h" />
+    <ClInclude Include="include\core\util.h" />
+    <ClInclude Include="include\video\CCommonGLDriver.h" />
+    <ClInclude Include="include\video\detail\CCommonGLDriver_impl.h" />
+    <ClInclude Include="include\video\EBuffer.h" />
+    <ClInclude Include="include\video\EDriverFeatures.h" />
+    <ClInclude Include="include\video\IBuffer.h" />
+    <ClInclude Include="include\video\IVideoDriver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="ReadAndWriteFile.h" />
-    <ClInclude Include="Sphere.h" />
-    <ClInclude Include="ThreeDObject.h" />
+    <ClCompile Include="DalatEngine.cpp" />
+    <ClCompile Include="include\video\CCommonGLDriverBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
