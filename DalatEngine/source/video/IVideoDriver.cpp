@@ -5,5 +5,9 @@ namespace DalatEngine {
 		void IVideoDriver::clearBuffers(int clearMask) {
 
 		}
+
+		//void IVideoDriver::flush() {
+		//	flushImpl();
+		//}
 	}
 }

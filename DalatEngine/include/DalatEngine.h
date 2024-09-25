@@ -18,7 +18,7 @@ namespace DalatEngine {
 			std::cout << "Hello this is " << someNumber << " from Dalat engine\n";
 			std::string dest;
 			std::cout << "Test function get extension" << cutFileNameExtension(dest, filename);
-			std::cout << Video::init << " " << Video::clear << Video::rendering<< '\n';
+			//std::cout << Video::init << " " << Video::clear << Video::rendering<< '\n';
 		}
 	};
 }

@@ -4,6 +4,8 @@
 #include "SpriteRenderer.h"
 #include "GameLevel.h"
 #include "PowerUps.h"
+#include "video/CCommonGLDriver.h"
+
 enum GameState {
     GAME_ACTIVE,
     GAME_PAUSE,
@@ -14,6 +16,8 @@ enum GameState {
 using namespace irrklang;
 
 extern ISoundEngine* SoundEngine;
+extern std::shared_ptr<DalatEngine::Video::CCommonGLDriver> DDriver;
+
 class Game
 {
 

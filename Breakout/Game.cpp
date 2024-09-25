@@ -14,6 +14,8 @@
 #include "DalatEngine.h"
 
 ISoundEngine* SoundEngine = createIrrKlangDevice();
+std::shared_ptr<DalatEngine::Video::CCommonGLDriver> DDriver = DalatEngine::Video::CCommonGLDriver::createDriver();
+
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_MENU), Keys(), Width(width), Height(height),Lives(3)
 {
@@ -33,7 +35,10 @@ Game::~Game()
 
 void Game::Init()
 {
+    // Test init Dalat engine
     DalatEngine::Core::WelcomeMessage("some_asset.obj");
+    
+
     BackgroundMusic = SoundEngine->play2D("Audio/breakout.mp3", true,false,true);
     // load shaders
     ResourceManager::LoadShader("Shaders/Sprite.vert", "Shaders/Sprite.frag", nullptr, "sprite");

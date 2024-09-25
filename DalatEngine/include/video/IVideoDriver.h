@@ -14,7 +14,7 @@ namespace DalatEngine {
 		// method to createDevice
 	
 		class IVideoDriver {
-
+			
 	
 		// IDevice
 
@@ -33,6 +33,15 @@ namespace DalatEngine {
 		//virtual bool beginScene(int displayId = 0);
 
 		// virtual void draw3DTriangle
+		public:
+			IVideoDriver() {};
+			//primative type
+			//void draw() {
+			//	drawImpl();
+			//}
+
+			//virtual void drawImpl() {};
+		private:
 
 		// ----------------------------------
 		// Transform feedback
@@ -53,7 +62,9 @@ namespace DalatEngine {
 		//-------------------------------------------------------------------------
 		// Shader tool
 		//-------------------------------------------------------------------------
-			
+		public: 
+			//void flush();
+			//virtual void flushImpl() = 0;
 			void clearBuffers(int clearMask);
 		};
 
@@ -80,8 +91,8 @@ namespace DalatEngine {
 			EDF_RASTERIZER_DISCARDED = EDF_BATCHING_SWITCHED_OFF << 1
 		};
 
-		u8 init = EDF_INITIALIZED;
-		u8 clear = EDF_NEEDS_CLEAR_SCREEN_BORDER;
-		u8 rendering = EDF_IS_RENDERING_FRAME;
+		//u8 init = EDF_INITIALIZED;
+		//u8 clear = EDF_NEEDS_CLEAR_SCREEN_BORDER;
+		//u8 rendering = EDF_IS_RENDERING_FRAME;
 	}
 }

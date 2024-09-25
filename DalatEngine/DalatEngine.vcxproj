@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -108,12 +108,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>glfw3.lib;Glad.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Externals\glfw-3.3.8.bin.WIN64\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)Externals\Glad\Build\$(Platform)\$(Configuration)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -141,11 +147,13 @@
     <ClInclude Include="include\scene\ISceneNode.h" />
     <ClInclude Include="include\video\CCommonGLDriver.h" />
     <ClInclude Include="include\video\detail\CCommonGLDriver_impl.h" />
+    <ClInclude Include="include\video\detail\CGLSLFunctionPointerSet_impl.h" />
     <ClInclude Include="include\video\detail\SRenderState.h" />
     <ClInclude Include="include\video\EBuffer.h" />
     <ClInclude Include="include\video\EDriverFeatures.h" />
     <ClInclude Include="include\video\IBuffer.h" />
     <ClInclude Include="include\video\IVideoDriver.h" />
+    <ClInclude Include="include\video\IVideoDriver_fwd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DalatEngine.cpp" />
