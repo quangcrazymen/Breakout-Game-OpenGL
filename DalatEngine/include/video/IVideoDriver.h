@@ -10,6 +10,11 @@ namespace DalatEngine {
 		protected:
 			ICompileData(){}
 		};
+
+		// method to createDevice
+	
+		class IVideoDriver {
+
 	
 		// IDevice
 
@@ -48,7 +53,9 @@ namespace DalatEngine {
 		//-------------------------------------------------------------------------
 		// Shader tool
 		//-------------------------------------------------------------------------
-
+			
+			void clearBuffers(int clearMask);
+		};
 
 		// Test function
 		//std::cout

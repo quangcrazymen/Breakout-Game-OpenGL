@@ -45,12 +45,27 @@
     <ClInclude Include="include\video\CCommonGLDriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\scene\ISceneNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\quadtree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\video\detail\SRenderState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DalatEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\video\CCommonGLDriverBase.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\video\IVideoDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

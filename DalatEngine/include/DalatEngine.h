@@ -4,6 +4,12 @@
 #include "core/util.h"
 #include "video/IVideoDriver.h"
 
+// CCSeneManager
+// IVideoDriver
+// IGUIEnvironment
+// CTextureManager
+// CMaterialRendererPtr
+
 namespace DalatEngine {
 	namespace Core
 	{

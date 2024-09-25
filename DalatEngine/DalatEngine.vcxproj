@@ -133,11 +133,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DalatEngine.h" />
+    <ClInclude Include="include\core\quadtree.h" />
     <ClInclude Include="include\core\string.h" />
     <ClInclude Include="include\core\types.h" />
     <ClInclude Include="include\core\util.h" />
+    <ClInclude Include="include\IDevice.h" />
+    <ClInclude Include="include\scene\ISceneNode.h" />
     <ClInclude Include="include\video\CCommonGLDriver.h" />
     <ClInclude Include="include\video\detail\CCommonGLDriver_impl.h" />
+    <ClInclude Include="include\video\detail\SRenderState.h" />
     <ClInclude Include="include\video\EBuffer.h" />
     <ClInclude Include="include\video\EDriverFeatures.h" />
     <ClInclude Include="include\video\IBuffer.h" />
@@ -146,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="DalatEngine.cpp" />
     <ClCompile Include="include\video\CCommonGLDriverBase.h" />
+    <ClCompile Include="source\video\IVideoDriver.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
