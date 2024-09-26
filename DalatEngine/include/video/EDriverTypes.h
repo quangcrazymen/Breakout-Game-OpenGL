@@ -1,0 +1,14 @@
+#pragma once
+
+namespace DalatEngine {
+	namespace Video {
+		enum E_DRIVER_TYPE {
+			EDT_NULL = 0,
+			EDT_OPENGL = 1,
+			EDT_OPENGLES2 = EDT_OPENGL << 1,
+			EDT_OPENGL_NO_FIXED = EDT_OPENGLES2 << 1,
+			EDT_OPENGL_GLSL_FAMILY = EDT_OPENGL_NO_FIXED | EDT_OPENGLES2,
+			EDT_DIRECT3D11 = EDT_OPENGLES2 << 1
+		};
+	}
+}

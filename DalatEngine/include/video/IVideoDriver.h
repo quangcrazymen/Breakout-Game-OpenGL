@@ -1,5 +1,6 @@
 #pragma once
 #include "core/types.h"
+#include <core/triangle3d.h>
 
 namespace DalatEngine {
 	namespace Video {
@@ -66,6 +67,11 @@ namespace DalatEngine {
 			//void flush();
 			//virtual void flushImpl() = 0;
 			void clearBuffers(int clearMask);
+
+			void draw() {};
+
+			virtual void draw3DTriangle(const Core::triangle3d& triangle);
+
 		};
 
 		// Test function

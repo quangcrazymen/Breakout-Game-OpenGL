@@ -141,6 +141,7 @@
     <ClInclude Include="DalatEngine.h" />
     <ClInclude Include="include\core\quadtree.h" />
     <ClInclude Include="include\core\string.h" />
+    <ClInclude Include="include\core\triangle3d.h" />
     <ClInclude Include="include\core\types.h" />
     <ClInclude Include="include\core\util.h" />
     <ClInclude Include="include\IDevice.h" />
@@ -151,9 +152,11 @@
     <ClInclude Include="include\video\detail\SRenderState.h" />
     <ClInclude Include="include\video\EBuffer.h" />
     <ClInclude Include="include\video\EDriverFeatures.h" />
+    <ClInclude Include="include\video\EDriverTypes.h" />
     <ClInclude Include="include\video\IBuffer.h" />
     <ClInclude Include="include\video\IVideoDriver.h" />
     <ClInclude Include="include\video\IVideoDriver_fwd.h" />
+    <ClInclude Include="include\video\IVideoDriver_inline.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DalatEngine.cpp" />
