@@ -70,7 +70,7 @@ namespace DalatEngine {
 
 			void draw() {};
 
-			virtual void draw3DTriangle(const Core::triangle3d& triangle);
+			virtual void draw3DTriangle(Core::triangle3d& triangle);
 
 		};
 

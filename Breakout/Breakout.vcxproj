@@ -192,6 +192,8 @@
     <None Include="Shaders\Sprite.vert" />
     <None Include="Shaders\text_2d.frag" />
     <None Include="Shaders\text_2d.vert" />
+    <None Include="Shaders\triangle3d.frag" />
+    <None Include="Shaders\triangle3d.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\LearnOpenGL\resources\textures\particle.png" />

@@ -66,6 +66,9 @@ public:
     // Sound
     //bool isMute = false;
     irrklang::ISound* BackgroundMusic = nullptr;
+
+    // Test triangle
+    DalatEngine::Core::triangle3d *newTriangle;
 };
 
 

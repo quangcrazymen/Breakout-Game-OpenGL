@@ -134,6 +134,8 @@
     <None Include="Shaders\text_2d.vert" />
     <None Include="Shaders\text_2d.frag" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="Shaders\triangle3d.vert" />
+    <None Include="Shaders\triangle3d.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\LearnOpenGL\resources\textures\particle.png">

@@ -37,7 +37,10 @@ void Game::Init()
 {
     // Test init Dalat engine
     DalatEngine::Core::WelcomeMessage("some_asset.obj");
-    
+    newTriangle = new DalatEngine::Core::triangle3d(glm::vec3(-0.5f, -0.5f, 0.0f)
+        , glm::vec3(0.5f, -0.5f, 0.0f)
+        , glm::vec3(0.0f, 0.5f, 0.0f));
+    DDriver->draw3DTriangle(*newTriangle);
 
     BackgroundMusic = SoundEngine->play2D("Audio/breakout.mp3", true,false,true);
     // load shaders
@@ -227,6 +230,11 @@ void Game::Render()
         Renderer->DrawSprite(ResourceManager::GetTexture("background"),
             glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f
         );
+        // Test draw triangle
+        glUseProgram(ResourceManager::GetShader("triangle3d").ID);
+        glBindVertexArray(newTriangle->VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
         // draw level
         this->Levels[this->Level].Draw(*Renderer);
         Ball->Draw(*Renderer);

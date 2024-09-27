@@ -17,9 +17,14 @@ namespace DalatEngine {
 				const glm::vec3& v3);
 			//T dotProduct(const glm::vec3<T>)
 
+			void setVAO(u32 vao);
+
 			glm::vec3 PointA;
 			glm::vec3 PointB;
 			glm::vec3 PointC;
+
+			// VAO index
+			u32 VAO;
 		};
 
 		//! Typedef for a f32 3d triangle.
@@ -39,6 +44,10 @@ namespace DalatEngine {
 			, PointB(v2)
 			, PointC(v3) 	
 		{
+		}
+
+		 inline void triangle3d::setVAO(u32 vao) {
+			VAO = vao;
 		}
 	}
 }
