@@ -44,6 +44,7 @@ void Game::Init()
     ResourceManager::LoadShader("Shaders/Sprite.vert", "Shaders/Sprite.frag", nullptr, "sprite");
     ResourceManager::LoadShader("Shaders/particle.vert", "Shaders/particle.frag", nullptr, "particle");
     ResourceManager::LoadShader("Shaders/post_processing.vert", "Shaders/post_processing.frag", nullptr, "postprocessing");
+    ResourceManager::LoadShader("Shaders/triangle3d.vert", "Shaders/triangle3d.frag", nullptr, "triangle3d");
 
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width),
