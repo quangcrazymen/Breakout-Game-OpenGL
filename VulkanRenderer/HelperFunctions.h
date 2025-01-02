@@ -1,14 +1,32 @@
 #pragma once
+#ifdef NDEBUG
+const bool enableValidationLayers = false;
+#else
+const bool enableValidationLayers = true;
+#endif
+
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <iostream>
 #include <vector>
+#include <optional>
+
 
 struct SwapChainSupportDetails {
     VkSurfaceCapabilitiesKHR capabilities;
     std::vector<VkSurfaceFormatKHR> formats;
     std::vector<VkPresentModeKHR> presentModes;
+};
+
+
+struct QueueFamilyIndices {
+    std::optional<uint32_t> graphicsFamily;
+    std::optional<uint32_t> presentFamily;
+
+    bool isComplete() {
+        return graphicsFamily.has_value() && presentFamily.has_value();
+    }
 };
 
 class HelperFunctions
@@ -31,6 +49,9 @@ public:
     // We use const lvalue reference here because it's read-only
     static inline SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device, const VkSurfaceKHR& surface);
     static inline bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+//private:
+    static inline bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface);
+    static inline std::vector<const char*> getRequiredExtensions();
 
     HelperFunctions() = delete;
 };

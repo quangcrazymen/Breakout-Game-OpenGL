@@ -24,6 +24,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DalatEngine", "DalatEngine\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanRenderer", "VulkanRenderer\VulkanRenderer.vcxproj", "{E624AE85-581E-4532-B268-C4E73893493A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Breakout-vulkan", "Breakout-vulkan\Breakout-vulkan.vcxproj", "{C06DF849-D677-4829-B043-59EB0F5DD6FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -88,6 +90,14 @@ Global
 		{E624AE85-581E-4532-B268-C4E73893493A}.Release|x64.Build.0 = Release|x64
 		{E624AE85-581E-4532-B268-C4E73893493A}.Release|x86.ActiveCfg = Release|Win32
 		{E624AE85-581E-4532-B268-C4E73893493A}.Release|x86.Build.0 = Release|Win32
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Debug|x64.ActiveCfg = Debug|x64
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Debug|x64.Build.0 = Debug|x64
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Debug|x86.ActiveCfg = Debug|Win32
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Debug|x86.Build.0 = Debug|Win32
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Release|x64.ActiveCfg = Release|x64
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Release|x64.Build.0 = Release|x64
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Release|x86.ActiveCfg = Release|Win32
+		{C06DF849-D677-4829-B043-59EB0F5DD6FB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

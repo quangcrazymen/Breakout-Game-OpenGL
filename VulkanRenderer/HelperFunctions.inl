@@ -1,6 +1,18 @@
 #pragma once
 #include "HelperFunctions.h"
 #include <Windows.h>
+
+#include <iostream>
+#include <fstream>
+#include <stdexcept>
+#include <algorithm>
+#include <chrono>
+#include <vector>
+#include <cstring>
+#include <cstdlib>
+#include <cstdint>
+#include <limits>
+#include <array>
 #include <set>
 
 inline bool HelperFunctions::checkValidationLayerSupport() {
@@ -60,22 +72,55 @@ inline SwapChainSupportDetails HelperFunctions::querySwapChainSupport(VkPhysical
     return details;
 }
 
-//inline bool isDeviceSuitable(VkPhysicalDevice device) {
-//    QueueFamilyIndices indices = findQueueFamilies(device);
-//
-//    bool extensionsSupported = checkDeviceExtensionSupport(device);
-//
-//    bool swapChainAdequate = false;
-//    if (extensionsSupported) {
-//        SwapChainSupportDetails swapChainSupport = HelperFunctions::querySwapChainSupport(device, surface);
-//        swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-//    }
-//
-//    VkPhysicalDeviceFeatures supportedFeatures;
-//    vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
-//
-//    return indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
-//}
+// todo: This function is referencing a lot, consider save it to a member var
+QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device,VkSurfaceKHR surface) {
+    QueueFamilyIndices indices;
+
+    uint32_t queueFamilyCount = 0;
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+    std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+
+    int i = 0;
+    for (const auto& queueFamily : queueFamilies) {
+        if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+            indices.graphicsFamily = i;
+        }
+
+        VkBool32 presentSupport = false;
+        vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
+
+        if (presentSupport) {
+            indices.presentFamily = i;
+        }
+
+        if (indices.isComplete()) {
+            break;
+        }
+
+        i++;
+    }
+
+    return indices;
+}
+
+inline bool HelperFunctions::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
+    QueueFamilyIndices indices = findQueueFamilies(device, surface);
+
+    bool extensionsSupported = checkDeviceExtensionSupport(device);
+
+    bool swapChainAdequate = false;
+    if (extensionsSupported) {
+        SwapChainSupportDetails swapChainSupport = HelperFunctions::querySwapChainSupport(device, surface);
+        swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+    }
+
+    VkPhysicalDeviceFeatures supportedFeatures;
+    vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
+
+    return indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
+}
 
 inline bool HelperFunctions::checkDeviceExtensionSupport(VkPhysicalDevice device) {
     uint32_t extensionCount;
@@ -91,4 +136,36 @@ inline bool HelperFunctions::checkDeviceExtensionSupport(VkPhysicalDevice device
     }
 
     return requiredExtensions.empty();
+}
+
+inline std::vector<const char*> HelperFunctions::getRequiredExtensions() {
+    uint32_t glfwExtensionCount = 0;
+    const char** glfwExtensions;
+    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+    std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+    if (enableValidationLayers) {
+        extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    }
+
+    return extensions;
+}
+
+static std::vector<char> readFile(const std::string& filename) {
+    std::ifstream file(filename, std::ios::ate | std::ios::binary);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("failed to open file!");
+    }
+
+    size_t fileSize = (size_t)file.tellg();
+    std::vector<char> buffer(fileSize);
+
+    file.seekg(0);
+    file.read(buffer.data(), fileSize);
+
+    file.close();
+
+    return buffer;
 }

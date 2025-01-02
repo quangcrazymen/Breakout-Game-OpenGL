@@ -8,21 +8,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <iostream>
-#include <fstream>
-#include <stdexcept>
-#include <algorithm>
-#include <chrono>
-#include <vector>
-#include <cstring>
-#include <cstdlib>
-#include <cstdint>
-#include <limits>
-#include <array>
-#include <optional>
-#include <set>
-
-
 
 // Compile shader: glslc triangle.vert -o vert.spv
 // Compile shader: glslc triangle.frag -o frag.spv
@@ -31,16 +16,6 @@ const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
-
-
-
-
-
-#ifdef NDEBUG
-const bool enableValidationLayers = false;
-#else
-const bool enableValidationLayers = true;
-#endif
 
 VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
     auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
@@ -58,15 +33,6 @@ void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT
         func(instance, debugMessenger, pAllocator);
     }
 }
-
-struct QueueFamilyIndices {
-    std::optional<uint32_t> graphicsFamily;
-    std::optional<uint32_t> presentFamily;
-
-    bool isComplete() {
-        return graphicsFamily.has_value() && presentFamily.has_value();
-    }
-};
 
 struct Vertex {
     glm::vec2 pos;
@@ -228,7 +194,6 @@ private:
             glfwPollEvents();
             drawFrame();
         }
-
         vkDeviceWaitIdle(device);
     }
 
@@ -328,7 +293,7 @@ private:
         createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
         createInfo.pApplicationInfo = &appInfo;
 
-        auto extensions = getRequiredExtensions();
+        auto extensions = HelperFunctions::getRequiredExtensions();
         createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
         createInfo.ppEnabledExtensionNames = extensions.data();
 
@@ -388,7 +353,7 @@ private:
         vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
 
         for (const auto& device : devices) {
-            if (isDeviceSuitable(device)) {
+            if (HelperFunctions::isDeviceSuitable(device,surface)) {
                 physicalDevice = device;
                 break;
             }
@@ -400,7 +365,7 @@ private:
     }
 
     void createLogicalDevice() {
-        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+        QueueFamilyIndices indices = findQueueFamilies(physicalDevice,surface);
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
         std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -468,7 +433,7 @@ private:
         createInfo.imageArrayLayers = 1;
         createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+        QueueFamilyIndices indices = findQueueFamilies(physicalDevice, surface);
         uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
 
         if (indices.graphicsFamily != indices.presentFamily) {
@@ -711,7 +676,7 @@ private:
     }
 
     void createCommandPool() {
-        QueueFamilyIndices queueFamilyIndices = findQueueFamilies(physicalDevice);
+        QueueFamilyIndices queueFamilyIndices = findQueueFamilies(physicalDevice, surface);
 
         VkCommandPoolCreateInfo poolInfo{};
         poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
@@ -725,7 +690,7 @@ private:
 
     void createTextureImage() {
         int texWidth, texHeight, texChannels;
-        stbi_uc* pixels = stbi_load("C:\\Users\\pc\\source\\repos\\Breakout-Game-OpenGL\\Breakout\\Textures\\awesomeface.png", &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+        stbi_uc* pixels = stbi_load("C:\\Users\\quang.nguyendo\\source\\repos\\Breakout-Game-OpenGL\\Breakout\\Textures\\awesomeface.png", &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
         VkDeviceSize imageSize = texWidth * texHeight * 4;
 
         if (!pixels) {
@@ -1332,90 +1297,10 @@ private:
         }
     }
 
-    bool isDeviceSuitable(VkPhysicalDevice device) {
-        QueueFamilyIndices indices = findQueueFamilies(device);
-
-        bool extensionsSupported = HelperFunctions::checkDeviceExtensionSupport(device);
-
-        bool swapChainAdequate = false;
-        if (extensionsSupported) {
-            SwapChainSupportDetails swapChainSupport = HelperFunctions::querySwapChainSupport(device,surface);
-            swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-        }
-
-        VkPhysicalDeviceFeatures supportedFeatures;
-        vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
-
-        return indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
-    }
 
 
 
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device) {
-        QueueFamilyIndices indices;
 
-        uint32_t queueFamilyCount = 0;
-        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
-
-        std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
-
-        int i = 0;
-        for (const auto& queueFamily : queueFamilies) {
-            if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
-                indices.graphicsFamily = i;
-            }
-
-            VkBool32 presentSupport = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
-
-            if (presentSupport) {
-                indices.presentFamily = i;
-            }
-
-            if (indices.isComplete()) {
-                break;
-            }
-
-            i++;
-        }
-
-        return indices;
-    }
-
-    std::vector<const char*> getRequiredExtensions() {
-        uint32_t glfwExtensionCount = 0;
-        const char** glfwExtensions;
-        glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-        std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-
-        if (enableValidationLayers) {
-            extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-        }
-
-        return extensions;
-    }
-
-
-
-    static std::vector<char> readFile(const std::string& filename) {
-        std::ifstream file(filename, std::ios::ate | std::ios::binary);
-
-        if (!file.is_open()) {
-            throw std::runtime_error("failed to open file!");
-        }
-
-        size_t fileSize = (size_t)file.tellg();
-        std::vector<char> buffer(fileSize);
-
-        file.seekg(0);
-        file.read(buffer.data(), fileSize);
-
-        file.close();
-
-        return buffer;
-    }
 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
         std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
