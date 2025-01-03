@@ -139,6 +139,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DalatEngine.h" />
+    <ClInclude Include="include\core\boundingbox.h" />
+    <ClInclude Include="include\core\frustum.h" />
+    <ClInclude Include="include\core\plane.h" />
     <ClInclude Include="include\core\quadtree.h" />
     <ClInclude Include="include\core\string.h" />
     <ClInclude Include="include\core\triangle3d.h" />
