@@ -59,9 +59,9 @@ void SpriteRenderer::DrawSprite(const Texture2D& texture, glm::vec2 position,
     texture.Bind();
 
     glBindVertexArray(this->quadVAO);
-    //glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     //DDriver;
-    DDriver->drawImpl();
+    //DDriver->drawImpl();
     
     glBindVertexArray(0);
 }

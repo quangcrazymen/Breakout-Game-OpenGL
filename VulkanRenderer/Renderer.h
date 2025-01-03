@@ -7,7 +7,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-
+#include "Game.h"
 
 // Compile shader: glslc triangle.vert -o vert.spv
 // Compile shader: glslc triangle.frag -o frag.spv
@@ -89,14 +89,17 @@ const std::vector<uint16_t> indices = {
 
 class HelloTriangleApplication {
 public:
-    void run() {
-        initWindow();
+    //HelloTriangleApplication(HelloTriangleApplication&);
+    void run(Game &&game) {
+        //this->game = game;
+        initWindow(game.Width, game.Height);
         initVulkan();
         mainLoop();
         cleanup();
     }
 
 private:
+    //Game game;
     GLFWwindow* window;
 
     VkInstance instance;
@@ -149,12 +152,12 @@ private:
 
     bool framebufferResized = false;
 
-    void initWindow() {
+    void initWindow(int width, int height) {
         glfwInit();
 
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
+        window = glfwCreateWindow(width, height, "Vulkan", nullptr, nullptr);
         glfwSetWindowUserPointer(window, this);
         glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
     }
@@ -539,8 +542,8 @@ private:
     }
 
     void createGraphicsPipeline() {
-        auto vertShaderCode = readFile("shaders/vert.spv");
-        auto fragShaderCode = readFile("shaders/frag.spv");
+        auto vertShaderCode = readFile("Shaders/vert.spv");
+        auto fragShaderCode = readFile("Shaders/frag.spv");
 
         VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
         VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
@@ -690,7 +693,7 @@ private:
 
     void createTextureImage() {
         int texWidth, texHeight, texChannels;
-        stbi_uc* pixels = stbi_load("C:\\Users\\quang.nguyendo\\source\\repos\\Breakout-Game-OpenGL\\Breakout\\Textures\\awesomeface.png", &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+        stbi_uc* pixels = stbi_load("Images\\awesomeface.png", &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
         VkDeviceSize imageSize = texWidth * texHeight * 4;
 
         if (!pixels) {
@@ -1296,11 +1299,6 @@ private:
             return actualExtent;
         }
     }
-
-
-
-
-
 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
         std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;

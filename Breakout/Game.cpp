@@ -231,9 +231,9 @@ void Game::Render()
             glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f
         );
         // Test draw triangle
-        glUseProgram(ResourceManager::GetShader("triangle3d").ID);
-        glBindVertexArray(newTriangle->VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        //glUseProgram(ResourceManager::GetShader("triangle3d").ID);
+        //glBindVertexArray(newTriangle->VAO);
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // draw level
         this->Levels[this->Level].Draw(*Renderer);

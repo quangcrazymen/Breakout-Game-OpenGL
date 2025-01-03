@@ -20,10 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\triangle.vert" />
-    <None Include="Shaders\triangle.frag" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

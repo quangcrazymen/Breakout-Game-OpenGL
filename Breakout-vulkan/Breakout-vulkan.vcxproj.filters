@@ -19,4 +19,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\triangle.frag" />
+    <None Include="Shaders\triangle.vert" />
+  </ItemGroup>
 </Project>
