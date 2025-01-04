@@ -16,19 +16,23 @@ void SpriteRenderer::initRenderData() {
     unsigned int VBO;
     float vertices[] = {
         // pos      // tex
-        0.0f, 1.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 0.0f,
-
         0.0f, 1.0f, 0.0f, 1.0f,
         1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f
+    };
+    unsigned int indices[] = {  // note that we start from 0!
+        0, 1, 2, 2, 3, 0
     };
     glGenVertexArrays(1, &this->quadVAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &this->quadEBO);
     
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->quadEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     glBindVertexArray(this->quadVAO);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
@@ -36,6 +40,7 @@ void SpriteRenderer::initRenderData() {
     // Unbind 
     // 
     glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
 
@@ -59,7 +64,9 @@ void SpriteRenderer::DrawSprite(const Texture2D& texture, glm::vec2 position,
     texture.Bind();
 
     glBindVertexArray(this->quadVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->quadEBO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
     //DDriver;
     //DDriver->drawImpl();
     

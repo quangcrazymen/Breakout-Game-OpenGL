@@ -13,6 +13,7 @@ public:
 private:
     Shader       shader;
     unsigned int quadVAO;
+    unsigned int quadEBO;
 
     void initRenderData();
 };
