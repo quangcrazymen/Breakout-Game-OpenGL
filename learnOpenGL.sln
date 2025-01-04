@@ -26,10 +26,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanRenderer", "VulkanRen
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Breakout-vulkan", "Breakout-vulkan\Breakout-vulkan.vcxproj", "{C06DF849-D677-4829-B043-59EB0F5DD6FB}"
 	ProjectSection(ProjectDependencies) = postProject
+		{B86500B7-B1B7-4CBA-9D2E-913B7CEB5004} = {B86500B7-B1B7-4CBA-9D2E-913B7CEB5004}
 		{E624AE85-581E-4532-B268-C4E73893493A} = {E624AE85-581E-4532-B268-C4E73893493A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Breakout-GameLogic", "Breakout-GameLogic\Breakout-GameLogic.vcxproj", "{B86500B7-B1B7-4CBA-9D2E-913B7CEB5004}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E624AE85-581E-4532-B268-C4E73893493A} = {E624AE85-581E-4532-B268-C4E73893493A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
